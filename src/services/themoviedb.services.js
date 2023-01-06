@@ -9,29 +9,20 @@ export const getTrending = async () => {
   const { data } = await themoviedbApi.get('/trending/movie/day', {
     params: { api_key: keyApi },
   });
-  return console.log(data);
+  return data;
 };
-export const getSearchMovies = async ({ query, page }) => {
+
+export const getSearchMovies = async ({ query = '' }) => {
   const { data } = await themoviedbApi.get('/search/movie', {
-    params: { api_key: keyApi, query, page },
+    params: { api_key: keyApi, query },
   });
-  return console.log(data);
+  return data;
 };
-export const getMoviesDetails = async ({ movieId }) => {
-  const { data } = await themoviedbApi.get(`/movie/${movieId}`, {
+
+export const getMoviesId = async ({ movieId, detail = '' }) => {
+  // '/credits' '/reviews`
+  const { data } = await themoviedbApi.get(`/movie/${movieId}${detail}`, {
     params: { api_key: keyApi },
   });
-  return console.log(data);
-};
-export const getMoviesCredits = async ({ movieId }) => {
-  const { data } = await themoviedbApi.get(`/movie/${movieId}/credits`, {
-    params: { api_key: keyApi },
-  });
-  return console.log(data);
-};
-export const getMoviesReviews = async ({ movieId }) => {
-  const { data } = await themoviedbApi.get(`/movie/${movieId}/reviews`, {
-    params: { api_key: keyApi },
-  });
-  return console.log(data);
+  return data;
 };
