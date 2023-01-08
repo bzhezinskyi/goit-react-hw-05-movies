@@ -1,32 +1,26 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getMoviesId } from 'services/themoviedb.services';
+import { Photo } from './Cast.styled';
 
-export default function Reviews() {
+export default function Cast() {
   const { movieId } = useParams();
-  const [movieReviews, setMovieReviews] = useState(null);
+  const [movieCast, setMovieCast] = useState(null);
 
   useEffect(() => {
-    console.log(movieId);
     const createMovie = async () => {
-      const data = await getMoviesId({
-        movieId: movieId,
-        detail: '/reviews',
-      }).then();
-      console.log(data);
-
-      return setMovieReviews(data);
+      await getMoviesId({ movieId: movieId, detail: '/credits' }).then(
+        setMovieCast
+      );
     };
     createMovie();
-    console.log(movieReviews);
   }, []);
-  if (!movieReviews) {
+  if (!movieCast) {
     return;
   }
-  // console.log(movieReviews);
   return (
     <div>
-      {/* <ul>
+      <ul>
         {movieCast.cast.map(({ name, character, id, profile_path }) => (
           <li key={id}>
             <Photo
@@ -37,7 +31,7 @@ export default function Reviews() {
             <p>{character}</p>
           </li>
         ))}
-      </ul> */}
+      </ul>
     </div>
   );
 }

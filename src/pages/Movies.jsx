@@ -1,6 +1,6 @@
 import MoviesSearchForm from 'components/MoviesSearchForm/MoviesSearchForm';
 import { useState, useEffect } from 'react';
-import { NavLink, useSearchParams } from 'react-router-dom';
+import { NavLink, Outlet, useSearchParams } from 'react-router-dom';
 import { getSearchMovies } from 'services/themoviedb.services';
 
 export default function Movies() {
