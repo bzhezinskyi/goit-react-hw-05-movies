@@ -1,6 +1,6 @@
 import MoviesSearchForm from 'components/MoviesSearchForm/MoviesSearchForm';
 import { useState, useEffect } from 'react';
-import { NavLink, Outlet, useSearchParams } from 'react-router-dom';
+import { NavLink, useSearchParams } from 'react-router-dom';
 import { getSearchMovies } from 'services/themoviedb.services';
 
 export default function Movies() {
@@ -8,25 +8,26 @@ export default function Movies() {
   const [moviesList, setMoviesList] = useState('');
 
   useEffect(() => {
-    if (searchParams.get('query')) {
-      createMoviesList(searchParams.get('query'));
+    if (!searchParams.get('query')) {
+      return;
     }
-    return;
-  }, []);
-
-  const createMoviesList = movies => {
     const requestMoviesList = async () => {
-      const data = await getSearchMovies({ query: movies }).then();
+      const data = await getSearchMovies({
+        query: searchParams.get('query'),
+      }).then();
       return setMoviesList(data.results);
     };
     requestMoviesList();
+  }, [searchParams]);
+
+  const createSearchParams = movies => {
     setSearchParams({ query: movies });
   };
 
   return (
     <div>
       <MoviesSearchForm
-        onSubmitForm={createMoviesList}
+        onSubmitForm={createSearchParams}
         searchParams={searchParams.get('query') ?? ''}
       />
       {moviesList !== '' && (
