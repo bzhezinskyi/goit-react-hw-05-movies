@@ -18,7 +18,7 @@ export default function MovieDetails() {
       await getMoviesId({ movieId: movieId }).then(setMovie);
     };
     createMovie();
-  }, []);
+  }, [movieId]);
 
   if (!movie) {
     return;
