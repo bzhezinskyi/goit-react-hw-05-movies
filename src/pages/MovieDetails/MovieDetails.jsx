@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { NavLink, Outlet, useParams } from 'react-router-dom';
+import { Outlet, useParams } from 'react-router-dom';
 import { getMoviesId } from 'services/themoviedb.services';
 import { Box, Poster, StyledLink } from './MovieDetails.styled';
 
