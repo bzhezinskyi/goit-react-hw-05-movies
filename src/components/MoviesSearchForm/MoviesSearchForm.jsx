@@ -2,9 +2,11 @@ import { useState, useEffect } from 'react';
 
 export default function MoviesSearchForm({ onSubmitForm, searchParams }) {
   const [searchValue, setSearchValue] = useState('');
+
   useEffect(() => {
     setSearchValue(searchParams);
-  }, []);
+  }, [searchParams]);
+
   const handleChangeForm = event => {
     setSearchValue(event.target.value);
   };
