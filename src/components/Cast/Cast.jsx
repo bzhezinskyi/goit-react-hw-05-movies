@@ -9,12 +9,14 @@ export default function Cast() {
 
   useEffect(() => {
     const createMovie = async () => {
-      await getMoviesId({ movieId: movieId, detail: '/credits' }).then(
-        setMovieCast
-      );
+      await getMoviesId({
+        movieId: movieId,
+        detail: '/credits',
+      }).then(setMovieCast);
     };
     createMovie();
-  }, []);
+  }, [movieId]);
+
   if (!movieCast) {
     return;
   }
@@ -23,10 +25,12 @@ export default function Cast() {
       <ul>
         {movieCast.cast.map(({ name, character, id, profile_path }) => (
           <li key={id}>
-            <Photo
-              src={`https://image.tmdb.org/t/p/w500${profile_path}`}
-              alt={name}
-            />
+            {profile_path && (
+              <Photo
+                src={`https://image.tmdb.org/t/p/original${profile_path}`}
+                alt={name}
+              />
+            )}
             <p>{name}</p>
             <p>{character}</p>
           </li>

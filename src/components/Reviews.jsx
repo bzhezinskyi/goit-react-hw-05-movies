@@ -7,37 +7,32 @@ export default function Reviews() {
   const [movieReviews, setMovieReviews] = useState(null);
 
   useEffect(() => {
-    console.log(movieId);
     const createMovie = async () => {
-      const data = await getMoviesId({
+      await getMoviesId({
         movieId: movieId,
         detail: '/reviews',
-      }).then();
-      console.log(data);
-
-      return setMovieReviews(data);
+      }).then(setMovieReviews);
     };
     createMovie();
-    console.log(movieReviews);
-  }, []);
+  }, [movieId]);
+
   if (!movieReviews) {
     return;
   }
-  // console.log(movieReviews);
   return (
     <div>
-      {/* <ul>
-        {movieCast.cast.map(({ name, character, id, profile_path }) => (
-          <li key={id}>
-            <Photo
-              src={`https://image.tmdb.org/t/p/w500${profile_path}`}
-              alt={name}
-            />
-            <p>{name}</p>
-            <p>{character}</p>
-          </li>
-        ))}
-      </ul> */}
+      {movieReviews.results.length === 0 ? (
+        <h3>We don't have any reviews for this movie</h3>
+      ) : (
+        <ul>
+          {movieReviews.results.map(({ author, content, id }) => (
+            <li key={id}>
+              <h3>{author}</h3>
+              <p>{content}</p>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }
