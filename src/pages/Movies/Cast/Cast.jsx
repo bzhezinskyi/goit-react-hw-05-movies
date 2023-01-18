@@ -22,20 +22,24 @@ export default function Cast() {
   }
   return (
     <div>
-      <ul>
-        {movieCast.cast.map(({ name, character, id, profile_path }) => (
-          <li key={id}>
-            {profile_path && (
-              <Photo
-                src={`https://image.tmdb.org/t/p/original${profile_path}`}
-                alt={name}
-              />
-            )}
-            <p>{name}</p>
-            <p>{character}</p>
-          </li>
-        ))}
-      </ul>
+      {movieCast.cast.length === 0 ? (
+        <h3>We don't have any cast for this movie</h3>
+      ) : (
+        <ul>
+          {movieCast.cast.map(({ name, character, id, profile_path }) => (
+            <li key={id}>
+              {profile_path && (
+                <Photo
+                  src={`https://image.tmdb.org/t/p/original${profile_path}`}
+                  alt={name}
+                />
+              )}
+              <p>{name}</p>
+              <p>{character}</p>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }

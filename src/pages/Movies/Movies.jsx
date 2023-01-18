@@ -1,6 +1,7 @@
-import MoviesSearchForm from 'components/MoviesSearchForm/MoviesSearchForm';
+import { Box } from 'components/Box.styled';
+import MoviesSearchForm from 'pages/Movies/MoviesSearchForm/MoviesSearchForm';
 import { useState, useEffect } from 'react';
-import { NavLink, useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { getSearchMovies } from 'services/themoviedb.services';
 
 export default function Movies() {
@@ -25,23 +26,26 @@ export default function Movies() {
   };
 
   return (
-    <div>
-      <MoviesSearchForm
-        onSubmitForm={createSearchParams}
-        searchParams={searchParams.get('query') ?? ''}
-      />
+    <>
+      <Box>
+        <MoviesSearchForm
+          onSubmitForm={createSearchParams}
+          searchParams={searchParams.get('query') ?? ''}
+        />
+      </Box>
+
       {moviesList !== '' && (
         <ul>
           {moviesList.map(({ title, id }) => {
             return (
               <li key={id}>
-                <NavLink to={`/movies/${id}`}>{title}</NavLink>
+                <Link to={`/movies/${id}`}>{title}</Link>
               </li>
             );
           })}
         </ul>
       )}
       {/* {movies.length === 0 && <h2>not a valid search value</h2>} */}
-    </div>
+    </>
   );
 }

@@ -13,8 +13,8 @@ export const StyledLink = styled(NavLink)`
 
 export const Poster = styled.img`
   width: 200px;
+  margin-right: 10px;
 `;
-export const Box = styled.div`
+export const Container = styled.div`
   display: flex;
-  padding: 10px;
 `;

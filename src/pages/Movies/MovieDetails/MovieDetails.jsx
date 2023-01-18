@@ -1,8 +1,9 @@
+import { Box } from 'components/Box.styled';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { Outlet, useParams } from 'react-router-dom';
 import { getMoviesId } from 'services/themoviedb.services';
-import { Box, Poster, StyledLink } from './MovieDetails.styled';
+import { Container, Poster, StyledLink } from './MovieDetails.styled';
 
 const navItems = [
   { href: 'cast', text: 'Cast' },
@@ -25,25 +26,30 @@ export default function MovieDetails() {
   }
   return (
     <div>
-      <button>Goback</button>
       <Box>
-        <Poster
-          src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-          alt={movie.title}
-        />
-        <div>
-          <h2>
-            {movie.title} ({movie.release_date})
-          </h2>
-          <p>User Score : {movie.vote_average}</p>
-          <h3>Overviev</h3>
-          <p>{movie.overview}</p>
-          <h3>Genres</h3>
-          <p>{movie.genres.map(({ name }) => name).join(', ')}</p>
-        </div>
+        <button>Goback</button>
       </Box>
 
-      <div>
+      <Box>
+        <Container>
+          <Poster
+            src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+            alt={movie.title}
+          />
+          <div>
+            <h2>
+              {movie.title} ({movie.release_date})
+            </h2>
+            <p>User Score : {movie.vote_average}</p>
+            <h3>Overviev</h3>
+            <p>{movie.overview}</p>
+            <h3>Genres</h3>
+            <p>{movie.genres.map(({ name }) => name).join(', ')}</p>
+          </div>
+        </Container>
+      </Box>
+
+      <Box>
         <p>Additional information</p>
         <>
           {navItems.map(({ href, text }) => (
@@ -52,7 +58,7 @@ export default function MovieDetails() {
             </StyledLink>
           ))}
         </>
-      </div>
+      </Box>
       <Outlet />
     </div>
   );

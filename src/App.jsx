@@ -1,10 +1,10 @@
 import { Routes, Route } from 'react-router-dom';
 
 import Home from 'pages/Home/Home';
-import MovieDetails from 'pages/MovieDetails/MovieDetails';
-import Movies from 'pages/Movies';
-import Cast from './Cast/Cast';
-import Reviews from './Reviews';
+import MovieDetails from 'pages/Movies/MovieDetails/MovieDetails';
+import Movies from 'pages/Movies/Movies';
+import Cast from './pages/Movies/Cast/Cast';
+import Reviews from './pages/Movies/Reviews/Reviews';
 import Layout from 'components/Layout/Layout';
 
 export default function App() {

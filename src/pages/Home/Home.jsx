@@ -1,7 +1,7 @@
 import { HomeElement } from './Home.styled';
 import { getTrending } from 'services/themoviedb.services';
 import { useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export default function HomePage() {
   const [trandingList, setTrandingList] = useState();
@@ -25,7 +25,7 @@ export default function HomePage() {
         {trandingList.map(({ title, id }) => {
           return (
             <li key={id}>
-              <NavLink to={`/movies/${id}`}>{title}</NavLink>
+              <Link to={`/movies/${id}`}>{title}</Link>
             </li>
           );
         })}

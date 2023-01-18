@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const StyledLink = styled(NavLink)`
-  padding: 5px;
+  padding-left: 20px;
   color: black;
 
   &.active {
