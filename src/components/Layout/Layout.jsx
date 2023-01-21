@@ -1,4 +1,3 @@
-import { Outlet } from 'react-router-dom';
 import { Box } from 'components/Box.styled';
 import { StyledLink } from './Layout.styled';
 
@@ -7,7 +6,7 @@ const navItems = [
   { href: '/movies', text: 'Movies' },
 ];
 
-export default function Layout() {
+export default function Layout({ children }) {
   return (
     <>
       <Box>
@@ -17,7 +16,7 @@ export default function Layout() {
           </StyledLink>
         ))}
       </Box>
-      <Outlet />
+      <div>{children}</div>
     </>
   );
 }

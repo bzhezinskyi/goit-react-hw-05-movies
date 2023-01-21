@@ -1,9 +1,9 @@
-import { Box } from 'components/Box.styled';
-import { useState } from 'react';
-import { useEffect } from 'react';
-import { Outlet, useParams } from 'react-router-dom';
+import { Suspense, useState, useEffect } from 'react';
+import { Link, Outlet, useParams, useLocation } from 'react-router-dom';
+
 import { getMoviesId } from 'services/themoviedb.services';
 import { Container, Poster, StyledLink } from './MovieDetails.styled';
+import { Box } from 'components/Box.styled';
 
 const navItems = [
   { href: 'cast', text: 'Cast' },
@@ -13,6 +13,7 @@ const navItems = [
 export default function MovieDetails() {
   const { movieId } = useParams();
   const [movie, setMovie] = useState(null);
+  const location = useLocation();
 
   useEffect(() => {
     const createMovie = async () => {
@@ -27,7 +28,7 @@ export default function MovieDetails() {
   return (
     <div>
       <Box>
-        <button>Goback</button>
+        <Link to={location.state?.from ?? '/'}>Go back</Link>
       </Box>
 
       <Box>
@@ -53,13 +54,19 @@ export default function MovieDetails() {
         <p>Additional information</p>
         <>
           {navItems.map(({ href, text }) => (
-            <StyledLink key={href} to={href}>
+            <StyledLink
+              key={href}
+              to={href}
+              state={{ from: location.state?.from ?? '/' }}
+            >
               {text}
             </StyledLink>
           ))}
         </>
       </Box>
-      <Outlet />
+      <Suspense fallback={<p>Loading...</p>}>
+        <Outlet />
+      </Suspense>
     </div>
   );
 }

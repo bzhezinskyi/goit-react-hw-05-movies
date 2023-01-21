@@ -1,12 +1,13 @@
 import { Box } from 'components/Box.styled';
 import MoviesSearchForm from 'pages/Movies/MoviesSearchForm/MoviesSearchForm';
 import { useState, useEffect } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams, useLocation } from 'react-router-dom';
 import { getSearchMovies } from 'services/themoviedb.services';
 
 export default function Movies() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [moviesList, setMoviesList] = useState('');
+  const location = useLocation();
 
   useEffect(() => {
     if (!searchParams.get('query')) {
@@ -39,7 +40,9 @@ export default function Movies() {
           {moviesList.map(({ title, id }) => {
             return (
               <li key={id}>
-                <Link to={`/movies/${id}`}>{title}</Link>
+                <Link to={`/movies/${id}`} state={{ from: location }}>
+                  {title}
+                </Link>
               </li>
             );
           })}
