@@ -1,22 +1,28 @@
-import { Box } from 'components/Box.styled';
-import { StyledLink } from './Layout.styled';
+import { Container, Nav } from 'react-bootstrap';
+import { NavLink, Outlet } from 'react-router-dom';
 
 const navItems = [
-  { href: '/', text: 'Home' },
-  { href: '/movies', text: 'Movies' },
+  { href: '/', text: 'Фільми' },
+  { href: '/movie', text: 'Пошук' },
 ];
 
-export default function Layout({ children }) {
+export default function Layout() {
   return (
-    <>
-      <Box>
-        {navItems.map(({ href, text }) => (
-          <StyledLink key={href} to={href}>
-            {text}
-          </StyledLink>
-        ))}
-      </Box>
-      <div>{children}</div>
-    </>
+    <Container>
+      <header>
+        <Nav variant="tabs">
+          {navItems.map(({ href, text }) => (
+            <Nav.Item key={href}>
+              <Nav.Link as={NavLink} to={href}>
+                {text}
+              </Nav.Link>
+            </Nav.Item>
+          ))}
+        </Nav>
+      </header>
+      <main>
+        <Outlet />
+      </main>
+    </Container>
   );
 }

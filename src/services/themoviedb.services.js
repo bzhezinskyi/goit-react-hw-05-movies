@@ -5,24 +5,30 @@ const themoviedbApi = axios.create({
   baseURL: 'https://api.themoviedb.org/3',
 });
 
-export const getTrending = async () => {
-  const { data } = await themoviedbApi.get('/trending/movie/day', {
-    params: { api_key: keyApi },
-  });
+export const getTrending = async ({ mediaType, timeWindow }) => {
+  const { data } = await themoviedbApi.get(
+    `/trending/${mediaType}/${timeWindow}`,
+    {
+      params: { api_key: keyApi, language: 'uk' },
+    }
+  );
   return data;
 };
 
 export const getSearchMovies = async ({ query = '' }) => {
   const { data } = await themoviedbApi.get('/search/movie', {
-    params: { api_key: keyApi, query },
+    params: { api_key: keyApi, query, language: 'uk' },
   });
   return data;
 };
 
-export const getMoviesId = async ({ movieId, detail = '' }) => {
+export const getMoviesId = async ({ movieId, mediaType, detail = '' }) => {
   // '/credits' '/reviews`
-  const { data } = await themoviedbApi.get(`/movie/${movieId}${detail}`, {
-    params: { api_key: keyApi },
-  });
+  const { data } = await themoviedbApi.get(
+    `/${mediaType}/${movieId}${detail}`,
+    {
+      params: { api_key: keyApi, language: 'uk' },
+    }
+  );
   return data;
 };

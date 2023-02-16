@@ -14,17 +14,17 @@ const Reviews = lazy(() => import('./pages/Movies/Reviews/Reviews'));
 
 export default function App() {
   return (
-    <Layout>
-      <Suspense fallback={<p>Loading...</p>}>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/movies" element={<Movies />} />
-          <Route path="/movies/:movieId" element={<MovieDetails />}>
+    <Suspense fallback={<p>Loading...</p>}>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path="/movie" element={<Movies />} />
+          <Route path="/:mediaType/:movieId" element={<MovieDetails />}>
             <Route path="cast" element={<Cast />} />
             <Route path="revies" element={<Reviews />} />
           </Route>
-        </Routes>
-      </Suspense>
-    </Layout>
+        </Route>
+      </Routes>
+    </Suspense>
   );
 }

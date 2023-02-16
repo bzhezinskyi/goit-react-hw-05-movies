@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Button, Form } from 'react-bootstrap';
 
 export default function MoviesSearchForm({ onSubmitForm, searchParams }) {
   const [searchValue, setSearchValue] = useState('');
@@ -19,9 +20,23 @@ export default function MoviesSearchForm({ onSubmitForm, searchParams }) {
   };
 
   return (
-    <form onSubmit={handleSubmitForm}>
-      <input type="text" value={searchValue} onChange={handleChangeForm} />
-      <button disabled={searchValue === ''}>Search</button>
-    </form>
+    <Form onSubmit={handleSubmitForm}>
+      <Form.Control
+        className="mt-3"
+        type="text"
+        value={searchValue}
+        onChange={handleChangeForm}
+        placeholder="Movie name"
+      />
+
+      <Button
+        className="mt-3"
+        disabled={searchValue === ''}
+        variant="primary"
+        type="submit"
+      >
+        Submit
+      </Button>
+    </Form>
   );
 }

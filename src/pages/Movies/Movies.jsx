@@ -1,13 +1,13 @@
-import { Box } from 'components/Box.styled';
+import MovieCard from 'components/MovieCard/MovieCard';
 import MoviesSearchForm from 'pages/Movies/MoviesSearchForm/MoviesSearchForm';
 import { useState, useEffect } from 'react';
-import { Link, useSearchParams, useLocation } from 'react-router-dom';
+import { Col, Row } from 'react-bootstrap';
+import { useSearchParams } from 'react-router-dom';
 import { getSearchMovies } from 'services/themoviedb.services';
 
 export default function Movies() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [moviesList, setMoviesList] = useState('');
-  const location = useLocation();
 
   useEffect(() => {
     if (!searchParams.get('query')) {
@@ -28,27 +28,22 @@ export default function Movies() {
 
   return (
     <>
-      <Box>
-        <MoviesSearchForm
-          onSubmitForm={createSearchParams}
-          searchParams={searchParams.get('query') ?? ''}
-        />
-      </Box>
+      <MoviesSearchForm
+        onSubmitForm={createSearchParams}
+        searchParams={searchParams.get('query') ?? ''}
+      />
 
       {moviesList !== '' && (
-        <ul>
-          {moviesList.map(({ title, id }) => {
+        <Row xs={1} sm={2} md={3} lg={4} className="g-4">
+          {moviesList.map(movie => {
             return (
-              <li key={id}>
-                <Link to={`/movies/${id}`} state={{ from: location }}>
-                  {title}
-                </Link>
-              </li>
+              <Col key={movie.id}>
+                <MovieCard movie={movie} />
+              </Col>
             );
           })}
-        </ul>
+        </Row>
       )}
-      {/* {movies.length === 0 && <h2>not a valid search value</h2>} */}
     </>
   );
 }

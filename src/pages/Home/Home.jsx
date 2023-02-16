@@ -1,49 +1,125 @@
-import { HomeElement } from './Home.styled';
 import { getTrending } from 'services/themoviedb.services';
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { Card, Col, Row } from 'react-bootstrap';
+import { Button, ButtonGroup, Col, Row } from 'react-bootstrap';
+import MovieCard from 'components/MovieCard/MovieCard';
+import { useSearchParams } from 'react-router-dom';
 
 export default function HomePage() {
   const [trandingList, setTrandingList] = useState();
+  const [searchParams, setSearchParams] = useSearchParams({
+    timeWindow: 'day',
+    mediaType: 'movie',
+  });
 
   useEffect(() => {
     const createTrandingList = async () => {
-      const data = await getTrending().then();
+      const data = await getTrending({
+        mediaType: searchParams.get('mediaType'),
+        timeWindow: searchParams.get('timeWindow'),
+      }).then();
       return setTrandingList(data.results);
     };
     createTrandingList();
-  }, []);
+  }, [searchParams]);
+  const handleSearchParams = ({ type, value }) => {
+    switch (type) {
+      case 'mediaType':
+        setSearchParams({
+          timeWindow: searchParams.get('timeWindow'),
+          mediaType: value,
+        });
+        break;
+      case 'timeWindow':
+        setSearchParams({
+          mediaType: searchParams.get('mediaType'),
+          timeWindow: value,
+        });
+        break;
+
+      default:
+        break;
+    }
+  };
 
   if (!trandingList) {
     return;
   }
 
   return (
-    <HomeElement>
-      <h1>Trending todey</h1>
+    <>
+      <h1>У тренді</h1>
+      <ButtonGroup>
+        <Button
+          variant={
+            searchParams.get('timeWindow') === 'day'
+              ? 'primary'
+              : 'outline-primary'
+          }
+          onClick={() =>
+            handleSearchParams({ type: 'timeWindow', value: 'day' })
+          }
+        >
+          Сьогодні
+        </Button>
+        <Button
+          variant={
+            searchParams.get('timeWindow') === 'week'
+              ? 'primary'
+              : 'outline-primary'
+          }
+          onClick={() =>
+            handleSearchParams({ type: 'timeWindow', value: 'week' })
+          }
+        >
+          Цього тижня
+        </Button>
+      </ButtonGroup>
+      <ButtonGroup>
+        <Button
+          variant={
+            searchParams.get('mediaType') === 'movie'
+              ? 'primary'
+              : 'outline-primary'
+          }
+          onClick={() =>
+            handleSearchParams({ type: 'mediaType', value: 'movie' })
+          }
+        >
+          Фільми
+        </Button>
+        <Button
+          variant={
+            searchParams.get('mediaType') === 'tv'
+              ? 'primary'
+              : 'outline-primary'
+          }
+          onClick={() => handleSearchParams({ type: 'mediaType', value: 'tv' })}
+        >
+          Суріали
+        </Button>
+        <Button
+          variant={
+            searchParams.get('mediaType') === 'all'
+              ? 'primary'
+              : 'outline-primary'
+          }
+          onClick={() =>
+            handleSearchParams({ type: 'mediaType', value: 'all' })
+          }
+        >
+          Все
+        </Button>
+      </ButtonGroup>
+
       <Row xs={1} sm={2} md={3} lg={4} className="g-4">
         {trandingList.map(movie => {
           return (
             <Col key={movie.id}>
-              <Card>
-                <Link to={`/movies/${movie.id}`}>
-                  <Card.Img
-                    variant="top"
-                    src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
-                  />
-                  <Card.Body>
-                    <Card.Title>{movie.title}</Card.Title>
-                    <Card.Text>
-                      <>User Score : {movie.vote_average.toFixed(1)}</>
-                    </Card.Text>
-                  </Card.Body>
-                </Link>
-              </Card>
+              <MovieCard movie={movie} />
             </Col>
           );
         })}
       </Row>
-    </HomeElement>
+    </>
   );
 }
