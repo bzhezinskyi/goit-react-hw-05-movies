@@ -1,8 +1,8 @@
 {
-  "name": "goit-react-hw-05-movies",
+  "name": "movie-pet",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://bzhezinskyi.github.io/goit-react-hw-05-movies/",
+  "homepage": "https://bzhezinskyi.github.io/movie-pet/",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.3",
     "@testing-library/react": "^12.1.4",
